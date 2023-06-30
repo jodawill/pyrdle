@@ -27,25 +27,23 @@ def getGuess(word_list):
     resp = input('Guess: ').lower()
   return resp
 
-def getRemainingMap(answer, guess):
+def getFormattedDisplay(answer, guess):
   remaining_map = {}
   for i in range(0, len(answer)):
-    remaining_map[answer[i]] = remaining_map.get(i, 0) + 1
-  return remaining_map
-
-def getFormattedDisplay(answer, guess):
-  remaining_map = getRemainingMap(answer, guess)
+    if answer[i] == guess[i]:
+      continue
+    c = answer[i]
+    remaining_map[c] = remaining_map.get(c, 0) + 1
 
   result = ''
   for i in range(0, len(answer)):
-    c = guess[i]
     if answer[i] == guess[i]:
-      result += colors.green(c)
-    elif remaining_map.get(c, 0) > 0:
-      result += colors.yellow(c)
-      remaining_map[c] -= 1
+      result += colors.green(guess[i])
+    elif remaining_map.get(guess[i], 0) > 0:
+      result += colors.yellow(guess[i])
+      remaining_map[guess[i]] -= 1
     else:
-      result += colors.red(c)
+      result += colors.red(guess[i])
   return result
 
 def checkGuess(answer, guess):
